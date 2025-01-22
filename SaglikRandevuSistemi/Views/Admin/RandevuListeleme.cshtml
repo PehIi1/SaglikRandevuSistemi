@@ -1,0 +1,198 @@
+﻿@section stil{
+    <style>
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 25px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 25px;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 17px;
+                width: 17px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: 0.4s;
+                border-radius: 50%;
+            }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+            input:checked + .slider:before {
+                transform: translateX(25px);
+            }
+
+        .appointment {
+            background: #F5F5F5;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+            .appointment:hover {
+                transform: scale(1.02);
+            }
+
+        .appointment-column {
+            flex: 1;
+            text-align: center;
+        }
+
+            .appointment-column:first-child {
+                text-align: left;
+            }
+
+            .appointment-column:nth-child(2) {
+                margin-right: 40px;
+            }
+
+            .appointment-column:last-child {
+                text-align: right;
+            }
+
+    </style>
+}
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container" style="min-height: 563.5px;">
+    <div class="header">
+        <h2>Randevu Listesi</h2>
+        <div class="toggle-switch">
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+            <span style="margin-left: 10px; margin-bottom: 5px;"><p><b>Uygun Randevular</b></p></span>
+        </div>
+    </div>
+    @{
+        for(var i = 0; i < 5; i++){
+            <div class="appointment" onclick="openModal()">
+                <div class="appointment-column">
+                    <p>Burada doktor ismi yazilacaktir</p>
+                </div>
+                <div class="appointment-column">
+                    <p>Burada hastane ismi yazilacaktir</p>
+                </div>
+                <div class="appointment-column">
+                    <p>Buraya Klinik ismi yazilacaktir</p>
+                </div>
+                <div class="appointment-column">
+                    <p>En Erken Tarih: 02.01.2025 Perşembe</p>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+
+<div class="modal fade" id="saatSecimModal" tabindex="-1" role="dialog" aria-labelledby="saatSecimModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="saatSecimModalLabel">Saat Seçimi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="saatSecimForm">
+                    <input type="hidden" id="modalRandevuId" name="RandevuId" />
+                    <div class="form-group">
+                        <label for="saatDropdown">Saat Seçiniz:</label>
+                        <select id="saatDropdown" name="SecilenSaat" class="form-control">
+                            <!-- Saatler dinamik olarak doldurulacak -->
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="button" id="saatKaydetBtn" class="btn btn-primary">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+        function openModal(randevuId, tarih) {
+      // Modal'a randevu ID'sini gönder
+      $('#modalRandevuId').val(randevuId);
+
+      // Saatler için dropdown'ı temizle
+      $('#saatDropdown').empty();
+
+      // 9-16 saatleri için API çağrısı yap
+      $.getJSON('/Randevu/GetMusaitSaatler', { randevuId: randevuId, tarih: tarih }, function (data) {
+        $('#saatDropdown').append('<option value="">Bir saat seçiniz</option>');
+        data.forEach(function (saat) {
+          $('#saatDropdown').append('<option value="' + saat + '">' + saat + '</option>');
+        });
+      });
+
+      // Modal'ı göster
+      $('#saatSecimModal').modal('show');
+    }
+
+    $('#saatKaydetBtn').click(function () {
+      // Seçilen saat ve randevu ID'sini al
+      var randevuId = $('#modalRandevuId').val();
+      var secilenSaat = $('#saatDropdown').val();
+
+      if (!secilenSaat) {
+        alert('Lütfen bir saat seçiniz.');
+        return;
+      }
+
+      // Formu gönder
+      $.post('/Randevu/SaatSecimi', { RandevuId: randevuId, SecilenSaat: secilenSaat }, function () {
+        alert('Randevu saati kaydedildi.');
+        $('#saatSecimModal').modal('hide');
+        location.reload(); // Sayfayı yenile
+      });
+    });
+</script>

@@ -1,0 +1,74 @@
+﻿@using SaglikRandevuSistemi.Models
+@model List<Doktorlar>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Hastalar Tablosu</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>DoktorID</th>
+                            <th>Adı</th>
+                            <th>Soyadı</th>
+                            <th>Yaşı</th>
+                            <th>Tel no</th>
+                            <th>Email</th>
+                            <th>Kliniği</th>
+                            <th>Hastanesi</th>
+                            <th>Cinsiyeti</th>
+                            <th>Kullanıcı Adı</th>
+                            <th>Sil</th>
+                            <th>Güncelle</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>DoktorID</th>
+                            <th>Adı</th>
+                            <th>Soyadı</th>
+                            <th>Yaşı</th>
+                            <th>Tel no</th>
+                            <th>Email</th>
+                            <th>Kliniği</th>
+                            <th>Hastanesi</th>
+                            <th>Cinsiyeti</th>
+                            <th>Kullanıcı Adı</th>
+                            <th>Sil</th>
+                            <th>Güncelle</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td>@i.DrID</td>
+                                <td>@i.DrAdi</td>
+                                <td>@i.DrSoyadi</td>
+                                <td>@i.DrYas</td>
+                                <td>@i.DrTel</td>
+                                <td>@i.DrEmail</td>
+                                <td>@i.Klinikler.KlinikAdi</td>
+                                <td>@i.Hastaneler.HastaneAdi</td>
+                                <td>@i.Cinsiyetler.CinsiyetAdi</td>
+                                <td>@i.Kullanicilar.KullaniciAdi</td>
+                                <td>
+                                    <a href="~/../Views/Admin/Index.cshtml/@i.DrID" class="btn btn-danger">Sil</a>
+                                </td>
+                                <td>
+                                    <a href="~/../Views/Admin/Index.cshtml/@i.DrID" class="btn btn-success">Güncelle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

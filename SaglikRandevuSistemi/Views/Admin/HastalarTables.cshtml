@@ -1,0 +1,84 @@
+﻿@using SaglikRandevuSistemi.Models
+@model List<Hastalar>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Hastalar Tablosu</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>HastaID</th>
+                            <th>Adı</th>
+                            <th>Soyadı</th>
+                            <th>Yaşı</th>
+                            <th>Boyu</th>
+                            <th>Kilosu</th>
+                            <th>Tel No</th>
+                            <th>Email</th>
+                            <th>Adresi</th>
+                            <th>Sehiri</th>
+                            <th>İlçesi</th>
+                            <th>Cinsiyeti</th>
+                            <th>KullanıcıAdı</th>
+                            <th>Sil</th>
+                            <th>Güncelle</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>HastaID</th>
+                            <th>Adı</th>
+                            <th>Soyadı</th>
+                            <th>Yaşı</th>
+                            <th>Boyu</th>
+                            <th>Kilosu</th>
+                            <th>Tel No</th>
+                            <th>Email</th>
+                            <th>Adresi</th>
+                            <th>Sehiri</th>
+                            <th>İlçesi</th>
+                            <th>Cinsiyeti</th>
+                            <th>KullanıcıAdı</th>
+                            <th>Sil</th>
+                            <th>Güncelle</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach(var i in Model)
+                        {
+                            <tr>
+                                <td>@i.HastaID</td>
+                                <td>@i.HastaAdi</td>
+                                <td>@i.HastaSoyadi</td>
+                                <td>@i.HastaYas</td>
+                                <td>@i.HastaBoy</td>
+                                <td>@i.HastaKilo</td>
+                                <td>@i.HastaTel</td>
+                                <td>@i.HastaEmail</td>
+                                <td>@i.HastaAdres</td>
+                                <td>@i.Sehirler.SehirAdi</td>
+                                <td>@i.Ilceler.IlceAdi</td>
+                                <td>@i.Cinsiyetler.CinsiyetAdi</td>
+                                <td>@i.Kullanicilar.KullaniciAdi</td>
+                                <td>
+                                    <a href="@Url.Action("HastalarTables","Admin",@i.HastaID)" class="btn btn-danger">Sil</a>
+                                </td>
+                                <td>
+                                    <a href="Admin/Index/@i.HastaID" class="btn btn-success">Güncelle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a href="#" class="btn btn-primary">Hasta Ekle</a>
+            </div>
+        </div>
+    </div>
+</div>

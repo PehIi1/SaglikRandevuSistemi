@@ -1,0 +1,85 @@
+.container {
+    width: 95%;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+.main-section {
+    display: flex;
+    gap: 20px;
+}
+.left-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.button {
+    padding: 40px;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #388E3C;
+    margin-bottom: 20px;
+}
+.button:hover{
+    background-color: #40a345;
+}
+.tabs {
+    flex: 2;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.tabs-header {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+}
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #f1f1f1;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.tab:hover{
+    background-color: #65cc6a;
+}
+.tab.active {
+    background-color: #388E3C;
+    color: white;
+    font-weight: bold;
+}
+.tab-content {
+    padding: 20px;
+    text-align: center;
+    min-height: 200px;
+    max-height: 465px;
+    overflow-y: auto;
+}
+.card {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px dashed #ddd;
+    color: #757575;
+    font-size: 16px;
+    border-radius: 8px;
+}
+.data-box {
+    margin-bottom: 15px; /* Her veri kutusunun arasına boşluk ekle */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 14px;
+}
