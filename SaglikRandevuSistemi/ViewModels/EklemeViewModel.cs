@@ -1,10 +1,18 @@
-﻿using SaglikRandevuSistemi.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using SaglikRandevuSistemi.Models;
 
 namespace SaglikRandevuSistemi.ViewModels
 {
     public class EklemeViewModel
     {
-        public Hastalar? Hasta { get; set; }
-        public Doktorlar? Doktor { get; set; }
+        public int SelectedSehirID { get; set; }
+        public int SelectedIlceID { get; set; }
+        public List<SelectListItem> Sehirler { get; set; }
+        public List<SelectListItem> Ilceler { get; set; }
+
+        public Hastalar? Hastas { get; set; }
+        public Doktorlar? Doktors { get; set; }
+        public Hastaneler? Hastanes { get; set; }
+
     }
 }

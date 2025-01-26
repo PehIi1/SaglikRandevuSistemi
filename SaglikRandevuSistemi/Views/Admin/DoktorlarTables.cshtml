@@ -54,10 +54,38 @@
                                 <td>@i.DrYas</td>
                                 <td>@i.DrTel</td>
                                 <td>@i.DrEmail</td>
-                                <td>@i.Klinikler.KlinikAdi</td>
-                                <td>@i.Hastaneler.HastaneAdi</td>
-                                <td>@i.Cinsiyetler.CinsiyetAdi</td>
-                                <td>@i.Kullanicilar.KullaniciAdi</td>
+                                @if (i.KlinikID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Klinikler.KlinikAdi</td>
+                                }
+                                @if (i.HastaneID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Hastaneler.HastaneAdi</td>
+                                }
+                                @if (i.CinsiyetID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Cinsiyetler.CinsiyetAdi</td>
+                                }
+                                @if (i.KullaniciID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Kullanicilar.KullaniciAdi</td>
+                                }
                                 <td>
                                     <a href="~/../Views/Admin/Index.cshtml/@i.DrID" class="btn btn-danger">Sil</a>
                                 </td>

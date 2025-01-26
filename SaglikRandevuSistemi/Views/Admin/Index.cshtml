@@ -1,3 +1,10 @@
 ﻿@{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var errorMessage = TempData["ErrorMessage"];
+}
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger">
+        @errorMessage
+    </div>
 }

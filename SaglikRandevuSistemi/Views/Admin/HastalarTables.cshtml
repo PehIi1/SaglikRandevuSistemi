@@ -63,10 +63,38 @@
                                 <td>@i.HastaTel</td>
                                 <td>@i.HastaEmail</td>
                                 <td>@i.HastaAdres</td>
-                                <td>@i.Sehirler.SehirAdi</td>
-                                <td>@i.Ilceler.IlceAdi</td>
-                                <td>@i.Cinsiyetler.CinsiyetAdi</td>
-                                <td>@i.Kullanicilar.KullaniciAdi</td>
+                                @if (i.SehirID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Sehirler.SehirAdi</td>
+                                }
+                                @if (i.IlceID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Ilceler.IlceAdi</td>
+                                }
+                                @if (i.CinsiyetID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Cinsiyetler.CinsiyetAdi</td>
+                                }
+                                @if (i.KullaniciID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Kullanicilar.KullaniciAdi</td>
+                                }
                                 <td>
                                     <a href="@Url.Action("HastalarTables","Admin",@i.HastaID)" class="btn btn-danger">Sil</a>
                                 </td>
