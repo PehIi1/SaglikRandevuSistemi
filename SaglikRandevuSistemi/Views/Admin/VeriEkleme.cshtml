@@ -13,6 +13,10 @@
         <option value="Hastalar">Hastalar</option>
         <option value="Doktorlar">Doktorlar</option>
         <option value="Hastaneler">Hastaneler</option>
+        <option value="Klinikler">Klinikler</option>
+        <option value="Sehirler">Sehirler</option>
+        <option value="Ilceler">Ilceler</option>
+        <option value="Randevular">Randevular</option>
         <!-- Diğer tablolar -->
     </select>
 
@@ -21,11 +25,11 @@
             <h3>Hastalar Tablosuna Ekle</h3>
             <div class="mb-3">
                 <label>Hasta Adı</label>
-                @Html.TextBoxFor(vm => vm.Hastas.HastaAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+                @Html.TextBoxFor(vm => vm.Hastas.HastaAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
             </div>
             <div class="mb-3">
                 <label>Hasta Soyadı</label>
-                @Html.TextBoxFor(vm => vm.Hastas.HastaSoyadi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+                @Html.TextBoxFor(vm => vm.Hastas.HastaSoyadi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
             </div>
             <div class="mb-3">
                 <label>Hasta Yaşı</label>
@@ -53,19 +57,19 @@
             </div>
             <div class="mb-3">
                 <label>Hasta Şehiri</label>
-                @Html.DropDownListFor(vm => vm.Hastas.SehirID, (List<SelectListItem>)ViewBag.Sehirler, new {@class = "form-control"})
+                @Html.DropDownListFor(vm => vm.Hastas.SehirID, Model.Sehirler, "Şehir Seçiniz", new { @class = "form-control", id = "sehirDropdown" })
             </div>
             <div class="mb-3">
                 <label>Hasta İlçesi</label>
-                @Html.DropDownListFor(vm => vm.Hastas.IlceID, (List<SelectListItem>)ViewBag.Ilceler, new { @class = "form-control" })
+                @Html.DropDownListFor(vm => vm.Hastas.IlceID, Model.Ilceler, new { @class = "form-control", id = "ilceDropdown" })
             </div>
             <div class="mb-3">
                 <label>Hasta Cinsiyeti</label>
-                @Html.DropDownListFor(vm => vm.Hastas.CinsiyetID, (List<SelectListItem>)ViewBag.Cinsiyetler, new { @class = "form-control" })
+                @Html.DropDownListFor(vm => vm.Hastas.CinsiyetID, (List<SelectListItem>)ViewBag.Cinsiyetler, "Belirtmek İstemiyorum", new { @class = "form-control" })
             </div>
             <div class="mb-3">
                 <label>Hasta Kullanıcı Adı</label>
-                @Html.DropDownListFor(vm => vm.Hastas.KullaniciID, (List<SelectListItem>)ViewBag.Kullanicilar, new { @class = "form-control" })
+                @Html.DropDownListFor(vm => vm.Hastas.KullaniciID, (List<SelectListItem>)ViewBag.Kullanicilar, "Lütfen İlişkili Kullanıcı Adı Seçiniz", new { @class = "form-control" })
             </div>
         </div>
 
@@ -120,6 +124,58 @@
             <div class="mb-3">
                 <label for="ilceDropdown">Doktor Hastanesi</label>
                 @Html.DropDownListFor(vm => vm.SelectedIlceID, Model.Ilceler, new { @class = "form-control", id = "ilceDropdown" })
+            </div>
+        </div>
+
+        <div id="KliniklerForm" class="form-template" style="display:none;">
+            <div class="mb-3">
+                <label>Klinik Adı</label>
+                @Html.TextBoxFor(vm => vm.Kliniks.KlinikAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+            </div>
+        </div>
+
+        <div id="SehirlerForm" class="form-template" style="display:none;">
+            <div class="mb-3">
+                <label>Şehir Adı</label>
+                @Html.TextBoxFor(vm => vm.Sehirs.SehirAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+            </div>
+        </div>
+
+        <div id="IlcelerForm" class="form-template" style="display:none;">
+            <div class="mb-3">
+                <label>İlçe Adı</label>
+                @Html.TextBoxFor(vm => vm.Ilces.IlceAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+            </div>
+            <div class="mb-3">
+                <label>İlçe Şehiri</label>
+                @Html.DropDownListFor(vm => vm.Ilces.SehirID, Model.Sehirler, "Şehir Seçiniz", new { @class = "form-control", id = "sehirDropdown" })
+            </div>
+        </div>
+
+        <div id="RandevularForm" class="form-template" style="display:none;">
+            <div class="mb-3">
+                <label>Hasta Adı</label>
+                @Html.DropDownListFor(vm => vm.Randevus.HastaID, (List<SelectListItem>)ViewBag.Hastalar, "Hasta Seçiniz", new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Doktor Adı</label>
+                @Html.DropDownListFor(vm => vm.Randevus.DoktorID, (List<SelectListItem>)ViewBag.Doktorlar, "Doktor Seçiniz", new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Hastanesi</label>
+                @Html.DropDownListFor(vm => vm.Randevus.HastaneID, (List<SelectListItem>)ViewBag.Hastaneler, "Hastane Seçiniz", new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Kliniği</label>
+                @Html.DropDownListFor(vm => vm.Randevus.KlinikID, (List<SelectListItem>)ViewBag.Klinikler, "Klinik Seçiniz", new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Randevu Tarihi</label>
+                @Html.DropDownListFor(vm => vm.Randevus.RandSaatID, (List<SelectListItem>)ViewBag.RandevuSaatleri, "Randevu Tarihi Seçiniz", new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Randevu Durumu</label>
+                @Html.DropDownListFor(vm => vm.Randevus.RandDurumID, (List<SelectListItem>)ViewBag.RandevuDurumlari, "Randevu Durumu Seçiniz", new { @class = "form-control" })
             </div>
         </div>
     </div>

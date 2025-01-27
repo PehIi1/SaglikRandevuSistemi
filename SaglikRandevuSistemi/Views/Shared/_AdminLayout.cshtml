@@ -48,7 +48,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="@Url.Action("Index","Admin")">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
+                    <span>Ana Sayfa</span>
                 </a>
             </li>
 
@@ -72,16 +72,37 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("RandevuListeleme","Admin")">
+                <a class="nav-link" href="@Url.Action("HastanelerTables","Admin")">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>RandevuListeleme</span>
+                    <span>Hastaneler Tablosu</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("HastanelerTables","Admin")">
+                <a class="nav-link" href="@Url.Action("KliniklerTables","Admin")">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Hastaneler Tablosu</span>
+                    <span>Klinikler Tablosu</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("SehirlerTables","Admin")">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Şehirler Tablosu</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("IlcelerTables","Admin")">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>İlçeler Tablosu</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("RandevularTables","Admin")">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Randevular Tablosu</span>
                 </a>
             </li>
 
@@ -93,26 +114,15 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("DenemeEkle","Admin")">
+                <a class="nav-link" href="@Url.Action("RandevuListeleme","Admin")">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Deneme</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("HastalarTables","Admin")">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span>
+                    <span>RandevuListeleme</span>
                 </a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
 
         </ul>
         <!-- End of Sidebar -->

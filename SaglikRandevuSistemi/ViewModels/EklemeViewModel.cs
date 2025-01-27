@@ -13,6 +13,9 @@ namespace SaglikRandevuSistemi.ViewModels
         public Hastalar? Hastas { get; set; }
         public Doktorlar? Doktors { get; set; }
         public Hastaneler? Hastanes { get; set; }
-
+        public Klinikler? Kliniks { get; set; }
+        public Sehirler? Sehirs { get; set; }
+        public Ilceler? Ilces { get; set; }
+        public Randevular? Randevus { get; set; }
     }
 }

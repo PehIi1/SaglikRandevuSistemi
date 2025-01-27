@@ -96,7 +96,7 @@
                                     <td>@i.Kullanicilar.KullaniciAdi</td>
                                 }
                                 <td>
-                                    <a href="@Url.Action("HastalarTables","Admin",@i.HastaID)" class="btn btn-danger">Sil</a>
+                                    <a href="@Url.Action("VeriSilme","Admin", new { id = i.HastaID,  Sayfa= "HastalarTables"})" class="btn btn-danger">Sil</a>
                                 </td>
                                 <td>
                                     <a href="Admin/Index/@i.HastaID" class="btn btn-success">Güncelle</a>
@@ -105,7 +105,7 @@
                         }
                     </tbody>
                 </table>
-                <a href="#" class="btn btn-primary">Hasta Ekle</a>
+                <a href="@Url.Action("VeriEkleme","Admin")" class="btn btn-primary">Hasta Ekle</a>
             </div>
         </div>
     </div>

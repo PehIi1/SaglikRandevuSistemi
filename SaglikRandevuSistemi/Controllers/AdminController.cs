@@ -100,14 +100,49 @@ namespace SaglikRandevuSistemi.Controllers
                                                      Text = hs.HastaneAdi,
                                                      Value = hs.HastaneID.ToString()
                                                  }).ToList();
+            List<SelectListItem> randevusaati = context.RandevuSaatleris
+                .Select(rs => new SelectListItem
+                {
+                    Value = rs.RandSaatID.ToString(),
+                    Text = $"{rs.RandSaatTarihi:dd.MM.yyyy}/{rs.RandSaatZamani:HH:mm}"
+                }).ToList();
+            List<SelectListItem> randevudurumu = context.RandevuDurumlaris
+                .Select(rd => new SelectListItem
+                {
+                    Value = rd.RandDurumID.ToString(),
+                    Text = rd.RandDurumAdi
+                }).ToList();
+            List<SelectListItem> hastalar = context.Hastalars
+                .Select(h => new SelectListItem
+                {
+                    Value = h.HastaID.ToString(),
+                    Text = $"{h.HastaAdi} {h.HastaSoyadi}"
+                }).ToList();
+            List<SelectListItem> doktorlar = context.Doktorlars
+                .Select(d => new SelectListItem
+                {
+                    Value = d.DrID.ToString(),
+                    Text = $"{d.DrAdi} {d.DrSoyadi}"
+                }).ToList();
+
+            ViewBag.Hastalar = hastalar;
+            ViewBag.Doktorlar = doktorlar;
             ViewBag.Sehirler = sehirler;
             ViewBag.Ilceler = ilceler;
             ViewBag.Cinsiyetler = cinsiyetler;
             ViewBag.Kullanicilar = kullanicilar;
             ViewBag.Klinikler = klinikler;
             ViewBag.Hastaneler = hastaneler;
+            ViewBag.RandevuSaatleri = randevusaati;
+            ViewBag.RandevuDurumlari = randevudurumu;
             return View(model);
         }
+        
+        public IActionResult VeriSilme(int id, string Sayfa)
+        {
+            return RedirectToAction(Sayfa);
+        }
+
         [HttpGet]
         public JsonResult GetIlceler(int sehirID)
         {
@@ -138,7 +173,31 @@ namespace SaglikRandevuSistemi.Controllers
             {
                 context.Hastanelers.Add(model.Hastanes);
                 context.SaveChanges();
-                return RedirectToAction("VeriEkleme");
+                return RedirectToAction("HastanelerTables");
+            }
+            else if(tablo == "Klinikler" && model.Kliniks.KlinikAdi != null)
+            {
+                context.Kliniklers.Add(model.Kliniks);
+                context.SaveChanges();
+                return RedirectToAction("KliniklerTables");
+            }
+            else if(tablo == "Sehirler" && model.Sehirs.SehirAdi != null)
+            {
+                context.Sehirlers.Add(model.Sehirs);
+                context.SaveChanges();
+                return RedirectToAction("SehirlerTables");
+            }
+            else if(tablo == "Ilceler" && model.Ilces.IlceAdi != null)
+            {
+                context.Ilcelers.Add(model.Ilces);
+                context.SaveChanges();
+                return RedirectToAction("IlcelerTables");
+            }
+            else if(tablo == "Randevular" && model.Randevus.DoktorID != null)
+            {
+                context.Randevulars.Add(model.Randevus);
+                context.SaveChanges();
+                return RedirectToAction("RandevularTables");
             }
             else
             {
@@ -158,6 +217,48 @@ namespace SaglikRandevuSistemi.Controllers
             return View(Hastaneler);
         }
 
+        public IActionResult KliniklerTables()
+        {
+            var Klinikler = context.Kliniklers
+                .OrderBy(kl => kl.KlinikID)
+                .ToList();
+
+            return View(Klinikler);
+        }
+
+        public IActionResult SehirlerTables()
+        {
+            var sehirlerr = context.Sehirlers
+                .OrderBy(s => s.SehirID)
+                .ToList();
+
+            return View(sehirlerr);
+        }
+
+        public IActionResult IlcelerTables()
+        {
+            var ilcelerr = context.Ilcelers
+                .Include(i => i.Sehirler)
+                .OrderBy(i => i.IlceID)
+                .ToList();
+
+            return View(ilcelerr);
+        }
+
+        public IActionResult RandevularTables()
+        {
+            var randevularr = context.Randevulars
+                .Include(rand => rand.Hastalar)
+                .Include(rand => rand.Doktorlar)
+                .Include(rand => rand.Hastaneler)
+                .Include(rand => rand.Klinikler)
+                .Include(rand => rand.RandevuSaatleri)
+                .Include(rand => rand.RandevuDurumlari)
+                .OrderBy(rand => rand.RandevuDurumlari.RandDurumID)
+                .ToList();
+
+            return View(randevularr);
+        }
 
     }
 }

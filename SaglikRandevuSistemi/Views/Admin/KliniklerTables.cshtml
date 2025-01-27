@@ -1,5 +1,5 @@
 ﻿@using SaglikRandevuSistemi.Models
-@model List<Hastaneler>
+@model List<Klinikler>
 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -15,20 +15,16 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>HastaneID</th>
-                            <th>Hastane Adı</th>
-                            <th>Hastane Şehiri</th>
-                            <th>Hastane İlçesi</th>
+                            <th>KlinikID</th>
+                            <th>Klinik Adı</th>
                             <th>Sil</th>
                             <th>Güncelle</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>HastaneID</th>
-                            <th>Hastane Adı</th>
-                            <th>Hastane Şehiri</th>
-                            <th>Hastane İlçesi</th>
+                            <th>KlinikID</th>
+                            <th>Klinik Adı</th>
                             <th>Sil</th>
                             <th>Güncelle</th>
                         </tr>
@@ -37,24 +33,8 @@
                         @foreach (var i in Model)
                         {
                             <tr>
-                                <td>@i.HastaneID</td>
-                                <td>@i.HastaneAdi</td>
-                                @if (i.SehirID == null)
-                                {
-                                    <td></td>
-                                }
-                                else
-                                {
-                                    <td>@i.Sehirler.SehirAdi</td>
-                                }
-                                @if (i.IlceID == null)
-                                {
-                                    <td></td>
-                                }
-                                else
-                                {
-                                    <td>@i.Ilceler.IlceAdi</td>
-                                }
+                                <td>@i.KlinikID</td>
+                                <td>@i.KlinikAdi</td>
                                 <td>
                                     <a href="@Url.Action("HastalarTables","Admin")" class="btn btn-danger">Sil</a>
                                 </td>
@@ -65,7 +45,7 @@
                         }
                     </tbody>
                 </table>
-                <a href="@Url.Action("VeriEkleme","Admin")" class="btn btn-primary">Hastane Ekle</a>
+                <a href="@Url.Action("VeriEkleme","Admin")" class="btn btn-primary">Klinik Ekle</a>
             </div>
         </div>
     </div>
