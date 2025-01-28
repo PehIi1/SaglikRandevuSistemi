@@ -57,11 +57,11 @@
             </div>
             <div class="mb-3">
                 <label>Hasta Şehiri</label>
-                @Html.DropDownListFor(vm => vm.Hastas.SehirID, Model.Sehirler, "Şehir Seçiniz", new { @class = "form-control", id = "sehirDropdown" })
+                @Html.DropDownListFor(vm => vm.Hastas.SehirID, Model.Sehirler, "Şehir Seçiniz", new { @class = "form-control", id = "sehirDropdownHasta" })
             </div>
             <div class="mb-3">
                 <label>Hasta İlçesi</label>
-                @Html.DropDownListFor(vm => vm.Hastas.IlceID, Model.Ilceler, new { @class = "form-control", id = "ilceDropdown" })
+                @Html.DropDownListFor(vm => vm.Hastas.IlceID, Model.Ilceler, new { @class = "form-control", id = "ilceDropdownHasta" })
             </div>
             <div class="mb-3">
                 <label>Hasta Cinsiyeti</label>
@@ -118,12 +118,12 @@
                 @Html.TextBoxFor(vm => vm.Hastanes.HastaneAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
             </div>
             <div class="mb-3">
-                <label for="sehirDropdown">Doktor Kliniği</label>
-                @Html.DropDownListFor(vm => vm.SelectedSehirID, Model.Sehirler, "Şehir Seçiniz", new { @class = "form-control", id = "sehirDropdown" })
+                <label for="sehirDropdown">Hastane Şehiri</label>
+                @Html.DropDownListFor(vm => vm.Hastanes.SehirID, Model.Sehirler, "Şehir Seçiniz", new { @class = "form-control", id = "sehirDropdownHastane" })
             </div>
             <div class="mb-3">
-                <label for="ilceDropdown">Doktor Hastanesi</label>
-                @Html.DropDownListFor(vm => vm.SelectedIlceID, Model.Ilceler, new { @class = "form-control", id = "ilceDropdown" })
+                <label for="ilceDropdown">Hastane İlçesi</label>
+                @Html.DropDownListFor(vm => vm.Hastanes.IlceID, Model.Ilceler, new { @class = "form-control", id = "ilceDropdownHastane" })
             </div>
         </div>
 
@@ -196,9 +196,9 @@
     });
 
     $(document).ready(function () {
-        $('#sehirDropdown').change(function () {
+        $('#sehirDropdownHasta').change(function () {
             var sehirID = $(this).val();
-            var ilceDropdown = $('#ilceDropdown');
+            var ilceDropdown = $('#ilceDropdownHasta');
 
             // İlçe dropdown'ı temizle
             ilceDropdown.empty();
@@ -207,6 +207,27 @@
             if (sehirID) {
                 // İlçeleri al ve dropdown'a ekle
                 $.get('@Url.Action("GetIlceler","Admin")', { sehirID: sehirID }, function (data) {
+                    console.log(data);
+                    data.forEach(function (ilce) {
+                        ilceDropdown.append(new Option(ilce.text, ilce.value));
+                    });
+                });
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#sehirDropdownHastane').change(function () {
+            var sehirID = $(this).val();
+            var ilceDropdown = $('#ilceDropdownHastane');
+
+            // İlçe dropdown'ı temizle
+            ilceDropdown.empty();
+            ilceDropdown.append(new Option("İlçe Seçiniz", ""));
+
+            if (sehirID) {
+                // İlçeleri al ve dropdown'a ekle
+                $.get('@Url.Action("GetIlceler", "Admin")', { sehirID: sehirID }, function (data) {
                     console.log(data);
                     data.forEach(function (ilce) {
                         ilceDropdown.append(new Option(ilce.text, ilce.value));

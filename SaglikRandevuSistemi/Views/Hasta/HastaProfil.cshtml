@@ -1,0 +1,85 @@
+﻿@section Arayuz
+{
+    <link href="~/css/Arayuz.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Profil.css" rel="stylesheet" type="text/css" />
+}
+
+@await Html.PartialAsync("~/Views/PartialViews/_HastaProfilHeader.cshtml")
+
+<div class="container" style="min-height: 563.5px;">
+    <form id="profilForm">
+        <h2>Kimlik Bilgileri</h2>
+        <div class="form-group">
+            <label for="dogumTarihi">Kullanıcı Adı:</label>
+            <input type="text" id="kullaniciAdi" value="" disabled>
+        </div>
+        <div class="form-group">
+            <label for="ad">Ad:</label>
+            <input type="text" id="ad" value="" disabled>
+        </div>
+        <div class="form-group">
+            <label for="soyad">Soyad:</label>
+            <input type="text" id="soyad" value="" disabled>
+        </div>
+        <div class="form-group">
+            <label for="cinsiyet">Cinsiyet:</label>
+            <input type="text" id="cinsiyet" value="" disabled>
+        </div>
+        <div class="form-group">
+            <label for="dogumTarihi">Yaş:</label>
+            <input type="text" id="yas" value="" disabled>
+        </div>
+        <div class="form-group">
+            <label for="dogumTarihi">Boy:</label>
+            <input type="text" id="boy" value="" disabled>cm
+        </div>
+        <div class="form-group">
+            <label for="dogumTarihi">Kilo:</label>
+            <input type="text" id="kilo" value="" disabled>kg
+        </div>
+        <h2>iletisim bilgileri</h2>
+        <div class="form-group">
+            <label for="soyad">Telefon Numarası:</label>
+            <input type="text" id="telNo" value="" disabled>
+        </div>
+        <div class="form-group">
+            <label for="soyad">E-Posta Adresi:</label>
+            <input type="text" id="eposta" value="" disabled>
+        </div>
+        <div class="form-group">
+            <label for="soyad">Şehir:</label>
+            <input type="text" id="sehir" value="" disabled>
+        </div>
+        <div class="form-group">
+            <label for="dogumTarihi">İlçe:</label>
+            <input type="text" id="ilce" value="" disabled>
+        </div>
+        <div class="form-group">
+            <label for="dogumTarihi">Açık Adres:</label>
+            <input type="text" id="adres" value="" disabled>
+        </div>
+        <button type="button" id="guncelle">Bilgilerimi Güncelle</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const guncelleButton = document.getElementById("guncelle");
+    const inputs = document.querySelectorAll("input");
+
+    guncelleButton.addEventListener("click", () => {
+        const isDisabled = inputs[0].disabled;
+
+        inputs.forEach(input => {
+            input.disabled = !isDisabled;
+        });
+
+        guncelleButton.textContent = isDisabled ? "Kaydet" : "Bilgilerimi Güncelle";
+
+        if (inputs[0].disabled)
+        {
+          alert("Bu alanda form backende veriyi gondermis olmasi gerekir. *tam kaydete tiklandiginda* Ornek: form.submit();")
+        }
+        });
+    });
+</script>

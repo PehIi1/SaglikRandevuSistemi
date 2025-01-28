@@ -8,7 +8,7 @@
 <div class="container" style="height: 566.5px;">
     <div class="main-section">
         <div class="left-section">
-            <a href="AramaFiltresi.html" class="button" style="height: 200px;"><p> Randevu Al </p><br><span style="font-size: 14px;">Kişisel filtreleme yaparak dilediğiniz randevuyu alabilirsiniz.</span></a>
+            <a href="@Url.Action("AramaFiltresi","Hasta")" class="button" style="height: 200px;"><p> Randevu Al </p><br><span style="font-size: 14px;">Kişisel filtreleme yaparak dilediğiniz randevuyu alabilirsiniz.</span></a>
         </div>
         <div class="tabs">
             <div class="tabs-header">
@@ -39,3 +39,9 @@
     </div>
 </div>
 <script src="~/js/Arayuz.js"></script>
+<script>
+        window.history.pushState(null, "", window.location.href); // Geçmişi değiştir
+    window.onpopstate = function () {
+        window.history.pushState(null, "", window.location.href); // Geri tuşu engellenir, mevcut sayfada kalır
+    };
+</script>

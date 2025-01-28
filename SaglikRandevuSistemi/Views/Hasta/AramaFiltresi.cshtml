@@ -1,0 +1,99 @@
+﻿@section Arayuz
+{
+    <link href="~/css/filtre.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Arayuz.css" rel="stylesheet" type="text/css" />
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .form-group select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #fff;
+            }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+            .buttons button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+        .search-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .reset-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+    </style>
+}
+@await Html.PartialAsync("~/Views/PartialViews/_HastaArayuzHeader.cshtml")
+
+<div class="container" style="height: 563.5px;">
+    <h1 style="text-align: center;">Randevu Ara</h1>
+    <div class="form-group">
+        <label for="il">İl:</label>
+        <select id="il">
+            <option value="">İl Seçiniz</option>
+            <option value="1">İstanbul</option>
+            <option value="2">Ankara</option>
+            <option value="3">İzmir</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="ilce">İlçe:</label>
+        <select id="ilce" disabled>
+            <option value="">-FARK ETMEZ-</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="klinik">Klinik:</label>
+        <select id="klinik" disabled>
+            <option value="">Klinik Seçiniz</option>
+            <option value="1">Dahiliye</option>
+            <option value="2">Kardiyoloji</option>
+            <option value="3">Göz Hastalıkları</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="hastane">Hastane:</label>
+        <select id="hastane" disabled>
+            <option value="">-FARK ETMEZ-</option>
+            <option value="1">Hastane 1</option>
+            <option value="2">Hastane 2</option>
+            <option value="3">Hastane 3</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="hekim">Hekim:</label>
+        <select id="hekim" disabled>
+            <option value="">-FARK ETMEZ-</option>
+            <option value="1">Dr. Ahmet</option>
+            <option value="2">Dr. Ayşe</option>
+            <option value="3">Dr. Mehmet</option>
+        </select>
+    </div>
+    <div class="buttons">
+        <a href="@Url.Action("RandevuListeleme","Hasta")"><button class="search-btn">Randevu Ara </button></a>
+        <button class="reset-btn" id="reset">Temizle</button>
+    </div>
+</div>

@@ -3,7 +3,15 @@
 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var tempMessage = TempData["tempMessage"];
 }
+@if (tempMessage != null)
+{
+    <div class="alert alert-primary">
+        @tempMessage
+    </div>
+}
+
 
 <div class="container-fluid">
     <div class="card shadow mb-4">
@@ -23,7 +31,6 @@
                             <th>Randevu Tarihi</th>
                             <th>Randevu Durumu</th>
                             <th>Sil</th>
-                            <th>Güncelle</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -36,7 +43,6 @@
                             <th>Randevu Tarihi</th>
                             <th>Randevu Durumu</th>
                             <th>Sil</th>
-                            <th>Güncelle</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -93,10 +99,7 @@
                                     <td>@i.RandevuDurumlari.RandDurumAdi</td>
                                 }
                                 <td>
-                                    <a href="@Url.Action("HastalarTables","Admin")" class="btn btn-danger">Sil</a>
-                                </td>
-                                <td>
-                                    <a href="Admin/Index" class="btn btn-success">Güncelle</a>
+                                    <a href="@Url.Action("VeriSilme","Admin", new { id = i.RandID,  Sayfa= "RandevularTables"})" class="btn btn-danger" onclick="return confirm('Bi veriyi silmek istediğinizden emin misiniz?')">Sil</a>
                                 </td>
                             </tr>
                         }

@@ -3,7 +3,15 @@
 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var tempMessage = TempData["tempMessage"];
 }
+@if (tempMessage != null)
+{
+    <div class="alert alert-primary">
+        @tempMessage
+    </div>
+}
+
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -28,7 +36,6 @@
                             <th>Cinsiyeti</th>
                             <th>KullanıcıAdı</th>
                             <th>Sil</th>
-                            <th>Güncelle</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -47,7 +54,6 @@
                             <th>Cinsiyeti</th>
                             <th>KullanıcıAdı</th>
                             <th>Sil</th>
-                            <th>Güncelle</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -96,10 +102,7 @@
                                     <td>@i.Kullanicilar.KullaniciAdi</td>
                                 }
                                 <td>
-                                    <a href="@Url.Action("VeriSilme","Admin", new { id = i.HastaID,  Sayfa= "HastalarTables"})" class="btn btn-danger">Sil</a>
-                                </td>
-                                <td>
-                                    <a href="Admin/Index/@i.HastaID" class="btn btn-success">Güncelle</a>
+                                    <a href="@Url.Action("VeriSilme","Admin", new { id = i.HastaID,  Sayfa= "HastalarTables"})" class="btn btn-danger" onclick="return confirm('Bi veriyi silmek istediğinizden emin misiniz?')">Sil</a>
                                 </td>
                             </tr>
                         }

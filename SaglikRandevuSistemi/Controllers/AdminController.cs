@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SaglikRandevuSistemi.Models;
 using SaglikRandevuSistemi.ViewModels;
+using SaglikRandevuSistemi.Filters;
 
 namespace SaglikRandevuSistemi.Controllers
 {
+    [CustomAuthorization("Admin")]
     public class AdminController : Controller
     {
         private readonly DataContext context;
@@ -140,7 +142,106 @@ namespace SaglikRandevuSistemi.Controllers
         
         public IActionResult VeriSilme(int id, string Sayfa)
         {
-            return RedirectToAction(Sayfa);
+            if (Sayfa == "HastalarTables")
+            {
+                var silinecekHasta = context.Hastalars.FirstOrDefault(h => h.HastaID == id);
+
+                if (silinecekHasta == null)
+                {
+                    return NotFound("Silmek istediğiniz kayıt bulunamadı.");
+                }
+
+                context.Hastalars.Remove(silinecekHasta);
+                context.SaveChanges();
+                TempData["tempMessage"] = "Silme işlemi başarılı!";
+                return RedirectToAction(Sayfa);
+            }
+            else if (Sayfa == "HastanelerTables")
+            {
+                var silinecekHastane = context.Hastanelers.FirstOrDefault(h => h.HastaneID == id);
+
+                if (silinecekHastane == null)
+                {
+                    return NotFound("Silmek istediğiniz kayıt bulunamadı.");
+                }
+
+                context.Hastanelers.Remove(silinecekHastane);
+                context.SaveChanges();
+                TempData["tempMessage"] = "Silme işlemi başarılı!";
+                return RedirectToAction(Sayfa);
+            }
+            else if (Sayfa == "DoktorlarTables")
+            {
+                var silinecekDoktor = context.Doktorlars.FirstOrDefault(h => h.DrID == id);
+
+                if (silinecekDoktor == null)
+                {
+                    return NotFound("Silmek istediğiniz kayıt bulunamadı.");
+                }
+
+                context.Doktorlars.Remove(silinecekDoktor);
+                context.SaveChanges();
+                TempData["tempMessage"] = "Silme işlemi başarılı!";
+                return RedirectToAction(Sayfa);
+            }
+            else if (Sayfa == "KliniklerTables")
+            {
+                var silinecekKlinik = context.Kliniklers.FirstOrDefault(h => h.KlinikID == id);
+
+                if (silinecekKlinik == null)
+                {
+                    return NotFound("Silmek istediğiniz kayıt bulunamadı.");
+                }
+
+                context.Kliniklers.Remove(silinecekKlinik);
+                context.SaveChanges();
+                TempData["tempMessage"] = "Silme işlemi başarılı!";
+                return RedirectToAction(Sayfa);
+            }
+            else if (Sayfa == "SehirlerTables")
+            {
+                var silinecekSehir = context.Sehirlers.FirstOrDefault(h => h.SehirID == id);
+
+                if (silinecekSehir == null)
+                {
+                    return NotFound("Silmek istediğiniz kayıt bulunamadı.");
+                }
+
+                context.Sehirlers.Remove(silinecekSehir);
+                context.SaveChanges();
+                TempData["tempMessage"] = "Silme işlemi başarılı!";
+                return RedirectToAction(Sayfa);
+            }
+            else if (Sayfa == "IlcelerTables")
+            {
+                var silinecekIlce = context.Ilcelers.FirstOrDefault(h => h.IlceID == id);
+
+                if (silinecekIlce == null)
+                {
+                    return NotFound("Silmek istediğiniz kayıt bulunamadı.");
+                }
+
+                context.Ilcelers.Remove(silinecekIlce);
+                context.SaveChanges();
+                TempData["tempMessage"] = "Silme işlemi başarılı!";
+                return RedirectToAction(Sayfa);
+            }
+            else if (Sayfa == "RandevularTables")
+            {
+                var silinecekRandevu = context.Randevulars.FirstOrDefault(h => h.RandID == id);
+
+                if (silinecekRandevu == null)
+                {
+                    return NotFound("Silmek istediğiniz kayıt bulunamadı.");
+                }
+
+                context.Randevulars.Remove(silinecekRandevu);
+                context.SaveChanges();
+                TempData["tempMessage"] = "Silme işlemi başarılı!";
+                return RedirectToAction(Sayfa);
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
