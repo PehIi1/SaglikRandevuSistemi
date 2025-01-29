@@ -1,10 +1,7 @@
-﻿using System.Diagnostics;
-using System.Text.Json.Serialization;
+﻿using BCrypt.Net;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SaglikRandevuSistemi.Models;
-using SaglikRandevuSistemi.ViewModels;
 
 namespace SaglikRandevuSistemi.Controllers
 {
@@ -47,12 +44,24 @@ namespace SaglikRandevuSistemi.Controllers
         [HttpPost]
         public IActionResult Login(string KullaniciAd, string Parola)
         {
+            if (KullaniciAd == null || Parola == null)
+            {
+                TempData["ErrorMessage"] = "Boş bırakılan yerleri doldurunuz!";
+                return RedirectToAction("Login", "Home");
+            }
+
             var kullanici = context.Kullanicilars
-                .FirstOrDefault(ku => ku.KullaniciAdi == KullaniciAd && ku.Parola == Parola);
+                .FirstOrDefault(ku => ku.KullaniciAdi == KullaniciAd);
 
             if (kullanici == null)
             {
-                TempData["ErrorMessage"] = "Kullanıcı adı veya parola hatalıdır.";
+                TempData["ErrorMessage"] = "Kullanıcı adı hatalıdır! Lütfen tekrar deneyiniz.";
+                return RedirectToAction("Login");
+            }
+
+            if (!BCrypt.Net.BCrypt.Verify(Parola, kullanici.Parola))
+            {
+                TempData["ErrorMessage"] = "Parola hatalıdır! Lütfen tekrar deneyiniz.";
                 return RedirectToAction("Login");
             }
 
@@ -100,9 +109,54 @@ namespace SaglikRandevuSistemi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string KullaniciAd, string Parola, string TekrarParola)
+        public IActionResult Register(string KayitKullaniciAdi, string KayitParola, string KayitTekrarParola)
         {
-            return View();
+            if (KayitKullaniciAdi == null || KayitParola == null)
+            {
+                TempData["ErrorMessage"] = "Boş bırakılan yerleri doldurunuz!";
+                return RedirectToAction("Login", "Home");
+            }
+            if (context.Kullanicilars.Any(ku => ku.KullaniciAdi == KayitKullaniciAdi))
+            {
+                TempData["ErrorMessage"] = "Bu kullanıcı adı zaten alınmış, Lütfen başka bir tane deneyiniz!";
+                return RedirectToAction("Login", "Home");
+            }
+            if (KayitParola != KayitTekrarParola)
+            {
+                TempData["ErrorMessage"] = "Girdiğiniz parolalar eşleşmiyor!";
+                return RedirectToAction("Login", "Home");
+            }
+            if (KayitParola.Length < 8 || KayitParola.Length > 20)
+            {
+                TempData["ErrorMessage"] = "Parola en az 8, en fazla 20 karakterli olabilir!";
+                return RedirectToAction("Login", "Home");
+            }
+
+
+
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(KayitParola);
+
+            var yenikullanici = new Kullanicilar
+            {
+                KullaniciAdi = KayitKullaniciAdi,
+                Parola = hashedPassword,
+                RolID = 2
+            };
+
+            context.Kullanicilars.Add(yenikullanici);
+            context.SaveChanges();
+
+            var yenihasta = new Hastalar
+            {
+                KullaniciID = yenikullanici.KullaniciID
+            };
+
+            context.Hastalars.Add(yenihasta);
+            context.SaveChanges();
+            TempData["SuccessMessage"] = "Kaydınız oluşturulmuştur! Artık giriş yapabilirsiniz.";
+
+
+            return RedirectToAction("Login", "Home");
         }
 
         public IActionResult LogOut()

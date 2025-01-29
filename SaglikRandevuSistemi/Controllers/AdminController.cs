@@ -151,6 +151,12 @@ namespace SaglikRandevuSistemi.Controllers
                     return NotFound("Silmek istediğiniz kayıt bulunamadı.");
                 }
 
+                if (context.Randevulars.Any(r => r.HastaID == silinecekHasta.HastaID))
+                {
+                    TempData["errorMessage"] = "Bu hasta randevular tablosunda bulunduğu için silinemez!";
+                    return RedirectToAction(Sayfa);
+                }
+
                 context.Hastalars.Remove(silinecekHasta);
                 context.SaveChanges();
                 TempData["tempMessage"] = "Silme işlemi başarılı!";

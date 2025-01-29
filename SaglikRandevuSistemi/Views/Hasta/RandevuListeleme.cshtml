@@ -93,39 +93,46 @@
                 text-align: right;
             }
 
+        .hidden {
+            display: none;
+        }
+
     </style>
 }
 
 @await Html.PartialAsync("~/Views/PartialViews/_HastaArayuzHeader.cshtml")
 
-<div class="container" style="min-height: 563.5px;">
-    <div class="header">
+<div class="container" style="min-height: 583.5px;">
+    <div class="header div1">
         <h2>Randevu Listesi</h2>
-        <div class="toggle-switch">
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-            <span style="margin-left: 10px; margin-bottom: 5px;"><p><b>Uygun Randevular</b></p></span>
+    </div>
+
+    @for (var i = 1; i <= 5; i++)
+    {
+        <div class="div1 appointment">
+            <div class="appointment-column">
+                <p>Burada doktor ismi yazilacaktir</p>
+            </div>
+            <div class="appointment-column">
+                <p>Burada hastane ismi yazilacaktir</p>
+            </div>
+            <div class="appointment-column">
+                <p>Buraya Klinik ismi yazilacaktir</p>
+            </div>
+            <div class="appointment-column">
+                <p>En Erken Tarih: 02.01.2025 Perşembe</p>
+            </div>
+        </div>
+    }
+    <div class="header div2 hidden">
+        <h2>Randevu Saatleri</h2>
+    </div>
+
+    <div class="div2 appointment-column hidden">
+        <div class="appointment" id="hiddenDiv">
+            <div>
+                <p>Burada doktor ismi yazilacaktir</p>
+            </div>
         </div>
     </div>
-    @{
-        for (var i = 0; i < 9; i++)
-        {
-            <div class="appointment" onclick="openModal()">
-                <div class="appointment-column">
-                    <p>Burada doktor ismi yazilacaktir</p>
-                </div>
-                <div class="appointment-column">
-                    <p>Burada hastane ismi yazilacaktir</p>
-                </div>
-                <div class="appointment-column">
-                    <p>Buraya Klinik ismi yazilacaktir</p>
-                </div>
-                <div class="appointment-column">
-                    <p>En Erken Tarih: 02.01.2025 Perşembe</p>
-                </div>
-            </div>
-        }
-    }
 </div>

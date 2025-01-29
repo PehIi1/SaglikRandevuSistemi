@@ -1,4 +1,10 @@
-﻿@section Arayuz
+﻿@using SaglikRandevuSistemi.Models
+@model Doktorlar
+
+@{
+    var SuccessMessage = TempData["Success"];
+}
+@section Arayuz
 {
     <link href="~/css/Arayuz.css" rel="stylesheet" type="text/css" />
     <link href="~/css/Profil.css" rel="stylesheet" type="text/css" />
@@ -7,71 +13,55 @@
 @await Html.PartialAsync("~/Views/PartialViews/_DoktorProfilHeader.cshtml")
 
 <div class="container" style="min-height: 563.5px;">
-    <form id="profilForm">
+                            @if(SuccessMessage != null){ <div style="background-color: cornflowerblue; text-align:center">@SuccessMessage</div> }
+    @using (Html.BeginForm("ProfilGuncelle", "Doktor", FormMethod.Post, new { id = "profilForm" }))
+    {
         <h2>Kimlik Bilgileri</h2>
+        <input type="hidden" name="DrID" value="@Model.DrID" readonly>
         <div class="form-group">
-            <label for="dogumTarihi">Kullanıcı Adı:</label>
-            <input type="text" id="kullaniciAdi" value="Pehli1" disabled>
-        </div>
-        <div class="form-group">
-            <label for="ad">Ad:</label>
-            <input type="text" id="ad" value="İlhan" disabled>
+            <label for="Ad">Ad:</label>
+            <input type="text" id="ad" name="DrAdi" value="@(Model.DrAdi ?? "")" readonly>
         </div>
         <div class="form-group">
             <label for="soyad">Soyad:</label>
-            <input type="text" id="soyad" value="Pehlivan" disabled>
-        </div>
-        <div class="form-group">
-            <label for="soyad">Hastane:</label>
-            <input type="text" id="hastane" value="Ümraniye Devlet Hastanesi" disabled>
-        </div>
-        <div class="form-group">
-            <label for="soyad">Uzmanlık:</label>
-            <input type="text" id="uzmanlik" value="Diş" disabled>
+            <input type="text" id="soyad" name="DrSoyadi" value="@(Model.DrSoyadi ?? "")" readonly>
         </div>
         <div class="form-group">
             <label for="cinsiyet">Cinsiyet:</label>
-            <input type="text" id="cinsiyet" value="Erkek" disabled>
+            <select id="cinsiyet" name="CinsiyetID" disabled>
+                <option value="" selected disabled>Belirtmek istemiyorum</option>
+                @foreach (var cinsiyet in ViewBag.Cinsiyetler)
+                {
+                    <option value="@(cinsiyet.CinsiyetID ?? "")" selected="@(Model.CinsiyetID == cinsiyet.CinsiyetID ? "selected":null)">
+                        @cinsiyet.CinsiyetAdi
+                    </option>
+                }
+            </select>
         </div>
         <div class="form-group">
-            <label for="dogumTarihi">Yaş:</label>
-            <input type="text" id="yas" value="22" disabled>
+            <label for="yas">Yaş:</label>
+            <input type="text" id="yas" name="DrYas" value="@(Model.DrYas ?? "")" readonly>
+        </div>
+        <div class="form-group">
+            <label for="klinik">Klinik:</label>
+            <input type="text" id="klinik" name="DrKlinik" value="@(Model.Klinikler.KlinikAdi ?? "")" disabled>
+        </div>
+        <div class="form-group">
+            <label for="hastane">Hastane:</label>
+            <input type="text" id="hastane" name="DrHastane" value="@(Model.Hastaneler.HastaneAdi ?? "")" disabled>
         </div>
         <h2>iletisim bilgileri</h2>
         <div class="form-group">
-            <label for="soyad">Telefon Numarası:</label>
-            <input type="text" id="telNo" value="5538032642" disabled>
+            <label for="tel">Telefon Numarası:</label>
+            <input type="text" id="telNo" name="DrTel" value="@(Model.DrTel ?? "")" readonly>
         </div>
         <div class="form-group">
-            <label for="soyad">E-Posta Adresi:</label>
-            <input type="text" id="eposta" value="ilhanpehlivan184@gmail.com" disabled>
+            <label for="email">E-Posta Adresi:</label>
+            <input type="text" id="eposta" name="DrEmail" value="@(Model.DrEmail ?? "")" readonly>
         </div>
         <button type="button" id="guncelle">Bilgilerimi Güncelle</button>
-    </form>
+    }
 </div>
 
 
-<script>
-        document.addEventListener("DOMContentLoaded", () => {
-        const guncelleButton = document.getElementById("guncelle");
-        const inputs = document.querySelectorAll("input");
-
-        guncelleButton.addEventListener("click", () => {
-            const isDisabled = inputs[0].disabled;
-
-            inputs.forEach(input => {
-                input.disabled = !isDisabled;
-                document.getElementById("hastane").disabled = true;
-                document.getElementById("uzmanlik").disabled = true;
-            });
-
-            guncelleButton.textContent = isDisabled ? "Kaydet" : "Bilgilerimi Güncelle";
-
-            if (inputs[0].disabled)
-            {
-                alert("Bu alanda form backende veriyi gondermis olmasi gerekir. *tam kaydete tiklandiginda* Ornek: form.submit();")
-            }
-
-        });
-    });
-</script>
+<script src="~/js/doktorprofil.js"></script>
