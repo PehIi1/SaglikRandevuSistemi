@@ -1,0 +1,55 @@
+﻿@using SaglikRandevuSistemi.Models
+@model List<Klinikler>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var tempMessage = TempData["tempMessage"];
+}
+@if (tempMessage != null)
+{
+    <div class="alert alert-primary">
+        @tempMessage
+    </div>
+}
+
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Hastaneler Tablosu</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>KlinikID</th>
+                            <th>Klinik Adı</th>
+                            <th>Sil</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>KlinikID</th>
+                            <th>Klinik Adı</th>
+                            <th>Sil</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td>@i.KlinikID</td>
+                                <td>@i.KlinikAdi</td>
+                                <td>
+                                    <a href="@Url.Action("VeriSilme","Admin", new { id = i.KlinikID,  Sayfa= "KliniklerTables"})" class="btn btn-danger" onclick="return confirm('Bi veriyi silmek istediğinizden emin misiniz?')">Sil</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a href="@Url.Action("VeriEkleme","Admin")" class="btn btn-primary">Klinik Ekle</a>
+            </div>
+        </div>
+    </div>
+</div>

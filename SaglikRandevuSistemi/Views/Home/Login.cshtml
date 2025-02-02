@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["IsIndexPage"] = "login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var ErrorMessage = TempData["ErrorMessage"];
+    var SuccessMessage = TempData["SuccessMessage"];
+}
+@await Html.PartialAsync("~/Views/PartialViews/_LoginHeader.cshtml")
+
+<div class="wrapper bgded overlay gradient" style="background-image:url('@Url.Content("~/images/doctor-6701410_1280.jpg")');">
+    <div class="login-wrap">
+                            @if(ErrorMessage != null){ <div style="background-color: red; text-align:center">@ErrorMessage</div> }
+                            @if(SuccessMessage != null){ <div style="background-color: cornflowerblue; text-align:center">@SuccessMessage</div> }
+        <div class="login-html">
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Giriş Yap</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Kayıt Ol</label>
+            <div class="login-form">
+                <div class="sign-in-htm">
+                    @using (Html.BeginForm("Login","Home", FormMethod.Post))
+                    {
+                        <div class="group">
+                            <label for="user" class="label">Kullanıcı Adı</label>
+                            @Html.TextBox("KullaniciAd", null, new { @class = "input", @type = "text", id = "user" })
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Parola</label>
+                            @Html.Password("Parola", null, new { @class = "input", @type = "password", id = "user", @data_type = "password" })
+                        </div>
+                        <div class="group">
+                            <input id="check" type="checkbox" class="check" checked>
+                        </div>
+                        <div class="group">
+                            <button type="submit" class="button" style="background-color: #388E3C;">Giriş Yap</button>
+                        </div>
+                        <div class="hr"></div>
+                        <div class="foot-lnk">
+                            <label for="tab-2">Hesabınız Yok Mu?</label>
+                        </div>
+                    }
+                </div>
+                <div class="sign-up-htm">
+                    @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+                    {
+                        <div class="group">
+                            <label for="user" class="label">Kullanıcı Adı</label>
+                            <input id="user" type="text" name="KayitKullaniciAdi" class="input">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Parola</label>
+                            <input id="pass" type="password" name="KayitParola" class="input" data-type="password">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Parola Tekrarı</label>
+                            <input id="pass" type="password" name="KayitTekrarParola" class="input" data-type="password">
+                        </div>
+                        <div class="group">
+                            <button type="submit" class="button" style="background-color: #388E3C;">Kayit Ol</button>
+                        </div>
+                        <div class="hr"></div>
+                        <div class="foot-lnk">
+                            <label for="tab-1">Zaten bir Hesabınız var mı?</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+﻿@using SaglikRandevuSistemi.Models
+@model List<Doktorlar>
+
+
+@{
+    ViewData["IsIndexPage"] = "index";
+}
+@await Html.PartialAsync("~/Views/PartialViews/_IndexHeader.cshtml")
+
+<div class="wrapper bgded overlay gradient" style="background-image:url('@Url.Content("~/images/doctor-6701410_1280.jpg")');">
+    <div id="pageintro" class="hoc clear">
+        <article>
+            <p></p>
+            <h3 class="heading">Sağlık Hizmetlerinde Dijital Çözüm</h3>
+            <p style="font-size: 18px;">Artık doktor randevularınızı almak çok basit! Hemen giriş yaparak dilediğiniz tarihte randevu alabilirsiniz.</p>
+            <table class="table table-bordered">
+            </table>
+        </article>
+    </div>
+</div>

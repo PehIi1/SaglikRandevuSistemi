@@ -1,0 +1,138 @@
+﻿@section Arayuz
+{
+    <link href="~/css/Arayuz.css" rel="stylesheet" type="text/css" />
+    <style>
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 25px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 25px;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 17px;
+                width: 17px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: 0.4s;
+                border-radius: 50%;
+            }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+            input:checked + .slider:before {
+                transform: translateX(25px);
+            }
+
+        .appointment {
+            background: #F5F5F5;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+            .appointment:hover {
+                transform: scale(1.02);
+            }
+
+        .appointment-column {
+            flex: 1;
+            text-align: center;
+        }
+
+            .appointment-column:first-child {
+                text-align: left;
+            }
+
+            .appointment-column:nth-child(2) {
+                margin-right: 40px;
+            }
+
+            .appointment-column:last-child {
+                text-align: right;
+            }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+}
+
+@await Html.PartialAsync("~/Views/PartialViews/_HastaArayuzHeader.cshtml")
+
+<div class="container" style="min-height: 583.5px;">
+    <div class="header div1">
+        <h2>Randevu Listesi</h2>
+    </div>
+
+    @for (var i = 1; i <= 5; i++)
+    {
+        <div class="div1 appointment">
+            <div class="appointment-column">
+                <p>Burada doktor ismi yazilacaktir</p>
+            </div>
+            <div class="appointment-column">
+                <p>Burada hastane ismi yazilacaktir</p>
+            </div>
+            <div class="appointment-column">
+                <p>Buraya Klinik ismi yazilacaktir</p>
+            </div>
+            <div class="appointment-column">
+                <p>En Erken Tarih: 02.01.2025 Perşembe</p>
+            </div>
+        </div>
+    }
+    <div class="header div2 hidden">
+        <h2>Randevu Saatleri</h2>
+    </div>
+
+    <div class="div2 appointment-column hidden">
+        <div class="appointment" id="hiddenDiv">
+            <div>
+                <p>Burada doktor ismi yazilacaktir</p>
+            </div>
+        </div>
+    </div>
+</div>

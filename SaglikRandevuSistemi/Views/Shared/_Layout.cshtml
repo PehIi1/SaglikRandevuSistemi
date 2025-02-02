@@ -1,0 +1,64 @@
+﻿<html lang="">
+<head>
+    <title>Sağlık Randevu Sistemi</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="~/css/layout.css" rel="stylesheet" type="text/css" media="all">
+    <link href="~/css/loginstyles.css" rel="stylesheet" type="text/css" media="all">
+
+    @RenderSection("SSS", required: false)
+    @RenderSection("Arayuz", required: false)
+</head>
+<body id="top">
+    <div class="wrapper row0">
+        <div id="topbar" class="hoc clear">
+            <div class="fl_left">
+                <ul class="nospace">
+                    <li><i class="fas fa-phone rgtspace-5"></i>+90 553 803 2642</li>
+                    <li><i class="far fa-envelope rgtspace-5"></i> ilhanpehlivan184@gmail.com</li>
+                </ul>
+            </div>
+            <div class="fl_right">
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+    <div class="col-12 footerMenuText" style="background-color: #333; height: auto;padding: 1%;">
+        <div class="col-lg-3 col-md-3 col-sm-12 " style="padding: 0.5%;">
+            <div class="col-12">
+                <a href="@Url.Action("Hakkimizda", "Home")">
+                    <p style="color: #848484;">Hakkımızda</p>
+                </a>
+            </div>
+            <div class="col-12">
+                <a href="@Url.Action("SSS","Home")">
+                    <p style="color: #848484;">Sıkça Sorulan Sorular</p>
+                </a>
+            </div>
+            <div class="col-12">
+                <a href="@Url.Action("HizmetPolitikasi","Home")">
+                    <p style="color: #848484">Hizmet Politikası</p>
+                </a>
+            </div>
+            <div class="col-12">
+                <a href="@Url.Action("GizlilikPolitikasi","Home")">
+                    <p style="color: #848484">Gizlilik Politikası</p>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 text-center source">
+            <div class="col-12">
+                <p style="color: #848484;">© 2025 Tüm Hakları Saklıdır</p>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <a id="backtotop" href="#top"><i class="fas fa-chevron-up"></i></a>
+    <!-- JAVASCRIPTS -->
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/jquery.mobilemenu.js"></script>
+    <script src="~/js/jquery.backtotop.js"></script>
+    <script src="~/js/template.js"></script>
+    <script src="~/js/iller.js"></script>
+</body>
+</html>

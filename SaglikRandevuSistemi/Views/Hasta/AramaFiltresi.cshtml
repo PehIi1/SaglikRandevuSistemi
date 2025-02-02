@@ -1,0 +1,101 @@
+﻿@section Arayuz
+
+{
+    <link href="~/css/filtre.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Arayuz.css" rel="stylesheet" type="text/css" />
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .form-group select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #fff;
+            }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+            .buttons button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+        .search-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .reset-btn {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+}
+@await Html.PartialAsync("~/Views/PartialViews/_HastaArayuzHeader.cshtml")
+
+<div class="container" style="height: 563.5px;">
+    <h1 style="text-align: center;">Randevu Ara</h1>
+    <form id="searchForm" method="post" action="/search">
+        <div class="d-flex" style="margin-top:14px;">
+            <div class="form-group">
+                <label>İl</label>
+                <select class="form-control form-input ship-info-province-individual" name="Province" id="turkey-provinces-individual" required>
+                    <option selected="selected" value="" disabled=""> İl Seçiniz</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>İlce</label>
+                <select class="form-control form-input ship-info-province-individual" name="District" id="turkey-district-individual" required>
+                    <option selected="selected" value="" disabled=""> İl Seçiniz</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="klinik">Klinik:</label>
+                <select id="klinik" name="klinik" required>
+                    <option value="">Klinik Seçiniz</option>
+                    <option value="6">Diş Hekimliği</option>
+                    <option value="7">Ortopedi</option>
+                    <option value="8">Dahiliye</option>
+                    <option value="9">Genel Cerrahi</option>
+                    <option value="10">Üroloji</option>
+                    <option value="11">Kadın Doğum</option>
+                    <option value="12">Nöroloji</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hastane">Hastane:</label>
+                <select id="hastane" name="hastane" >
+                    <option value="">-FARK ETMEZ-</option>
+                </select>
+            </div>
+           
+            
+            <div class="form-group">
+                <label for="hekim">Hekim:</label>
+                <select id="hekim" name="hekim">
+                    <option value="">-FARK ETMEZ-</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit">Gönder</button>
+    </form>
+    
+</div>
+<script src="~/js/iller.js"></script>

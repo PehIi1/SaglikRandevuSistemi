@@ -1,0 +1,122 @@
+﻿@using SaglikRandevuSistemi.Models
+@model List<Hastalar>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var tempMessage = TempData["tempMessage"];
+    var errorMessage = TempData["errorMessage"];
+}
+@if (tempMessage != null)
+{
+    <div class="alert alert-primary">
+        @tempMessage
+    </div>
+}
+else if (errorMessage != null)
+{
+    <div class="alert alert-danger">
+        @errorMessage
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Hastalar Tablosu</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>HastaID</th>
+                            <th>Adı</th>
+                            <th>Soyadı</th>
+                            <th>Yaşı</th>
+                            <th>Boyu</th>
+                            <th>Kilosu</th>
+                            <th>Tel No</th>
+                            <th>Email</th>
+                            <th>Adresi</th>
+                            <th>Sehiri</th>
+                            <th>İlçesi</th>
+                            <th>Cinsiyeti</th>
+                            <th>KullanıcıAdı</th>
+                            <th>Sil</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>HastaID</th>
+                            <th>Adı</th>
+                            <th>Soyadı</th>
+                            <th>Yaşı</th>
+                            <th>Boyu</th>
+                            <th>Kilosu</th>
+                            <th>Tel No</th>
+                            <th>Email</th>
+                            <th>Adresi</th>
+                            <th>Sehiri</th>
+                            <th>İlçesi</th>
+                            <th>Cinsiyeti</th>
+                            <th>KullanıcıAdı</th>
+                            <th>Sil</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach(var i in Model)
+                        {
+                            <tr>
+                                <td>@i.HastaID</td>
+                                <td>@i.HastaAdi</td>
+                                <td>@i.HastaSoyadi</td>
+                                <td>@i.HastaYas</td>
+                                <td>@i.HastaBoy</td>
+                                <td>@i.HastaKilo</td>
+                                <td>@i.HastaTel</td>
+                                <td>@i.HastaEmail</td>
+                                <td>@i.HastaAdres</td>
+                                @if (i.SehirID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Sehirler.SehirAdi</td>
+                                }
+                                @if (i.IlceID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Ilceler.IlceAdi</td>
+                                }
+                                @if (i.CinsiyetID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Cinsiyetler.CinsiyetAdi</td>
+                                }
+                                @if (i.KullaniciID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Kullanicilar.KullaniciAdi</td>
+                                }
+                                <td>
+                                    <a href="@Url.Action("VeriSilme","Admin", new { id = i.HastaID,  Sayfa= "HastalarTables"})" class="btn btn-danger" onclick="return confirm('Bi veriyi silmek istediğinizden emin misiniz?')">Sil</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a href="@Url.Action("VeriEkleme","Admin")" class="btn btn-primary">Hasta Ekle</a>
+            </div>
+        </div>
+    </div>
+</div>

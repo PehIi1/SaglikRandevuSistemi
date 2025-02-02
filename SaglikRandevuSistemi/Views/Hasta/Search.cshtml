@@ -1,0 +1,194 @@
+﻿@using SaglikRandevuSistemi.Models
+@using SaglikRandevuSistemi.ViewModels
+@section Arayuz
+{
+    <link href="~/css/filtre.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Arayuz.css" rel="stylesheet" type="text/css" />
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .form-group select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #fff;
+            }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+            .buttons button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+        .search-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .reset-btn {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+}
+@model DrOptionsViewModel
+@await Html.PartialAsync("~/Views/PartialViews/_HastaArayuzHeader.cshtml")
+
+<div class="container" style="min-height: 566.5px;">
+    <h2>Doktor Seçenekleri</h2>
+
+    @if (Model != null)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Doktor</th>
+                    <th>Gun</th>
+                    <th>08.00</th>
+                    <th>09.00</th>
+                    <th>10.00</th>
+                    <th>11.00</th>
+                    <th>13.00</th>
+                    <th>14.00</th>
+                    <th>15.00</th>
+                    <th>16.00</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.DrOptions)
+                {
+                    <tr>
+                        <form method="post" action="/droptions">
+                        <td>
+                            <input type="text"
+                                   name="DrName"
+                                   value="@item.DrName"
+                                   readonly/>
+                        </td>
+                        <td>
+                            <input type="date"
+                                   name="Day"
+                                   value="@item.Day?.ToString("yyyy-MM-dd")"
+                                   readonly/>
+                        </td>
+                        <td>
+                            <input type="checkbox"
+                                   id="opt1_@item.OptionsID"
+                                   name="opt1"
+                                   value="true"
+                                   class="option"
+                                @(item.opt1 == true ? "checked" : "")
+                                @(item.opt1 == true ? "disabled" : "") />
+                        </td>
+                        <td>
+                            <input type="checkbox"
+                                   id="opt2_@item.OptionsID"
+                                   name="opt2"
+                                   value="true"
+                                   class="option"
+                                @(item.opt2 == true ? "checked" : "")
+                                @(item.opt2 == true ? "disabled" : "") />
+                        </td>
+                        <td>
+                            <input type="checkbox"
+                                   id="opt3_@item.OptionsID"
+                                   name="opt3"
+                                   value="true"
+                                   class="option"
+                                @(item.opt3 == true ? "checked" : "")
+                                @(item.opt3 == true ? "disabled" : "") />
+                        </td>
+                        <td>
+                            <input type="checkbox"
+                                   id="opt4_@item.OptionsID"
+                                   name="opt4"
+                                   value="true"
+                                   class="option"
+                                @(item.opt4 == true ? "checked" : "")
+                                @(item.opt4 == true ? "disabled" : "") />
+                        </td>
+                        <td>
+                            <input type="checkbox"
+                                   id="opt5_@item.OptionsID"
+                                   name="opt5"
+                                   value="true"
+                                   class="option"
+                                @(item.opt5 == true ? "checked" : "")
+                                @(item.opt5 == true ? "disabled" : "") />
+                        </td>
+                        <td>
+                            <input type="checkbox"
+                                   id="opt6_@item.OptionsID"
+                                   name="opt6"
+                                   value="true"
+                                   class="option"
+                                @(item.opt6 == true ? "checked" : "")
+                                @(item.opt6 == true ? "disabled" : "") />
+                        </td>
+                        <td>
+                            <input type="checkbox"
+                                   id="opt7_@item.OptionsID"
+                                   name="opt7"
+                                   value="true"
+                                   class="option"
+                                @(item.opt7 == true ? "checked" : "")
+                                @(item.opt7 == true ? "disabled" : "") />
+                        </td>
+                        <td>
+                            <input type="checkbox"
+                                   id="opt8_@item.OptionsID"
+                                   name="opt8"
+                                   value="true"
+                                   class="option"
+                                @(item.opt8 == true ? "checked" : "")
+                                @(item.opt8 == true ? "disabled" : "") />
+                        </td>
+                        <td>
+                            <input type="hidden" name="DrId" value="@item.DrID" />
+                            <input type="hidden" name="OptionsID" value="@item.OptionsID" />
+                            <input type="hidden" name="CityId" value="@item.CityId" />
+                            <input type="hidden" name="KlinikID" value="@item.KlinikID" />
+                            <input type="hidden" name="HastaneID" value="@item.HastaneID" />
+                            <button type="submit" class="btn btn-primary">Randevu Al</button>
+                        </td>
+                        </form>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No doctor options found.</p>
+    }
+</div>
+
+<script>
+    let allOptions = document.querySelectorAll(".option");
+
+    allOptions.forEach(Option => {
+        Option.addEventListener("change", function () {
+            if (this.checked) {
+                allOptions.forEach(o => {
+                    if (o !== this) o.checked = false;
+                });
+            }
+        });
+    });
+</script>

@@ -1,0 +1,67 @@
+﻿@using SaglikRandevuSistemi.Models
+@model Doktorlar
+
+@{
+    var SuccessMessage = TempData["Success"];
+}
+@section Arayuz
+{
+    <link href="~/css/Arayuz.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Profil.css" rel="stylesheet" type="text/css" />
+}
+
+@await Html.PartialAsync("~/Views/PartialViews/_DoktorProfilHeader.cshtml")
+
+<div class="container" style="min-height: 563.5px;">
+                            @if(SuccessMessage != null){ <div style="background-color: cornflowerblue; text-align:center">@SuccessMessage</div> }
+    @using (Html.BeginForm("ProfilGuncelle", "Doktor", FormMethod.Post, new { id = "profilForm" }))
+    {
+        <h2>Kimlik Bilgileri</h2>
+        <input type="hidden" name="DrID" value="@Model.DrID" readonly>
+        <div class="form-group">
+            <label for="Ad">Ad:</label>
+            <input type="text" id="ad" name="DrAdi" value="@(Model.DrAdi ?? "")" readonly>
+        </div>
+        <div class="form-group">
+            <label for="soyad">Soyad:</label>
+            <input type="text" id="soyad" name="DrSoyadi" value="@(Model.DrSoyadi ?? "")" readonly>
+        </div>
+        <div class="form-group">
+            <label for="cinsiyet">Cinsiyet:</label>
+            <select id="cinsiyet" name="CinsiyetID" disabled>
+                <option value="" selected disabled>Belirtmek istemiyorum</option>
+                @foreach (var cinsiyet in ViewBag.Cinsiyetler)
+                {
+                    <option value="@(cinsiyet.CinsiyetID ?? "")" selected="@(Model.CinsiyetID == cinsiyet.CinsiyetID ? "selected":null)">
+                        @cinsiyet.CinsiyetAdi
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="yas">Yaş:</label>
+            <input type="text" id="yas" name="DrYas" value="@(Model.DrYas ?? "")" readonly>
+        </div>
+        <div class="form-group">
+            <label for="klinik">Klinik:</label>
+            <input type="text" id="klinik" name="DrKlinik" value="@(Model.Klinikler.KlinikAdi ?? "")" disabled>
+        </div>
+        <div class="form-group">
+            <label for="hastane">Hastane:</label>
+            <input type="text" id="hastane" name="DrHastane" value="@(Model.Hastaneler.HastaneAdi ?? "")" disabled>
+        </div>
+        <h2>iletisim bilgileri</h2>
+        <div class="form-group">
+            <label for="tel">Telefon Numarası:</label>
+            <input type="text" id="telNo" name="DrTel" value="@(Model.DrTel ?? "")" readonly>
+        </div>
+        <div class="form-group">
+            <label for="email">E-Posta Adresi:</label>
+            <input type="text" id="eposta" name="DrEmail" value="@(Model.DrEmail ?? "")" readonly>
+        </div>
+        <button type="button" id="guncelle">Bilgilerimi Güncelle</button>
+    }
+</div>
+
+
+<script src="~/js/doktorprofil.js"></script>

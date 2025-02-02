@@ -1,0 +1,92 @@
+﻿@using SaglikRandevuSistemi.Models
+@model List<Doktorlar>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var tempMessage = TempData["Success"];
+}
+<!-- CSS Kodları -->
+<style>
+    .container {
+        margin-top: 30px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<div class="container" style="height: 563.5px;">
+    @if (tempMessage != null)
+
+    {
+        <div class="alert alert-primary">
+            @tempMessage
+        </div>
+    }
+    <h1 style="text-align: center;">Doktor Ara</h1>
+    <form id="randevucreate" method="post" action="/randevu">
+        @if (Model != null)
+        {
+            <div class="form-group">
+                <label for="DrId">Doktor Seçin</label>
+                <select id="DrId" name="DrId" class="form-control select2">
+                    <option value="">- Doktor Seçin -</option>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.DrID">
+                            @item.DrAdi @item.DrSoyadi
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Tarih Seçin</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Gönder</button>
+        }
+    </form>
+</div>
+
+
+

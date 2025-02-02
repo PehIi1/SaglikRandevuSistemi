@@ -1,0 +1,256 @@
+﻿@using SaglikRandevuSistemi.ViewModels
+
+@model EklemeViewModel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post" style="margin-left: 20px">
+    @Html.AntiForgeryToken()
+    <select id="tableSelector" name="tablo" class="form-select" required>
+        <option value="" disabled selected>Tablo Seçin</option>
+        <option value="Hastalar">Hastalar</option>
+        <option value="Doktorlar">Doktorlar</option>
+        <option value="Hastaneler">Hastaneler</option>
+        <option value="Klinikler">Klinikler</option>
+        <option value="Sehirler">Sehirler</option>
+        <option value="Ilceler">Ilceler</option>
+        <option value="Randevular">Randevular</option>
+        <!-- Diğer tablolar -->
+    </select>
+
+    <div id="formContainer" style="margin-left: 20px; margin-top: 10px">
+        <div id="HastalarForm" class="form-template" style="display:none;">
+            <h3>Hastalar Tablosuna Ekle</h3>
+            <div class="mb-3">
+                <label>Hasta Adı</label>
+                @Html.TextBoxFor(vm => vm.Hastas.HastaAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+            </div>
+            <div class="mb-3">
+                <label>Hasta Soyadı</label>
+                @Html.TextBoxFor(vm => vm.Hastas.HastaSoyadi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+            </div>
+            <div class="mb-3">
+                <label>Hasta Yaşı</label>
+                @Html.TextBoxFor(vm => vm.Hastas.HastaYas, new { @class = "form-control", maxlength = "3", pattern = "[0-9]{1,3}" })
+            </div>
+            <div class="mb-3">
+                <label>Hasta Boyu (cm)</label>
+                @Html.TextBoxFor(vm => vm.Hastas.HastaBoy, new { @class = "form-control", maxlength = "3", pattern = "[0-9]{1,3}" })
+            </div>
+            <div class="mb-3">
+                <label>Hasta Kilosu (kg)</label>
+                @Html.TextBoxFor(vm => vm.Hastas.HastaKilo, new { @class = "form-control", maxlength = "3", pattern = "[0-9]{1,3}" })
+            </div>
+            <div class="mb-3">
+                <label>Hasta Telefon Numarası</label>
+                @Html.TextBoxFor(vm => vm.Hastas.HastaTel, new { @type = "text", @class = "form-control", minlength = "11", maxlength = "11", pattern = "[0-9]{1,11}", placeholder = "Lütfen numaranızı eksiksiz giriniz" })
+            </div>
+            <div class="mb-3">
+                <label>Hasta Email</label>
+                @Html.TextBoxFor(vm => vm.Hastas.HastaEmail, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Hasta Adresi</label>
+                @Html.TextBoxFor(vm => vm.Hastas.HastaAdres, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Hasta Şehiri</label>
+                @Html.DropDownListFor(vm => vm.Hastas.SehirID, Model.Sehirler, "Şehir Seçiniz", new { @class = "form-control", id = "sehirDropdownHasta" })
+            </div>
+            <div class="mb-3">
+                <label>Hasta İlçesi</label>
+                @Html.DropDownListFor(vm => vm.Hastas.IlceID, Model.Ilceler, new { @class = "form-control", id = "ilceDropdownHasta" })
+            </div>
+            <div class="mb-3">
+                <label>Hasta Cinsiyeti</label>
+                @Html.DropDownListFor(vm => vm.Hastas.CinsiyetID, (List<SelectListItem>)ViewBag.Cinsiyetler, "Belirtmek İstemiyorum", new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Hasta Kullanıcı Adı</label>
+                @Html.DropDownListFor(vm => vm.Hastas.KullaniciID, (List<SelectListItem>)ViewBag.Kullanicilar, "Lütfen İlişkili Kullanıcı Adı Seçiniz", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div id="DoktorlarForm" class="form-template" style="display:none;">
+            <div class="mb-3">
+                <label>Doktor Adı</label>
+                @Html.TextBoxFor(vm => vm.Doktors.DrAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+            </div>
+            <div class="mb-3">
+                <label>Doktor Soyadı</label>
+                @Html.TextBoxFor(vm => vm.Doktors.DrSoyadi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+            </div>
+            <div class="mb-3">
+                <label>Doktor Yaşı</label>
+                @Html.TextBoxFor(vm => vm.Doktors.DrYas, new { @class = "form-control", maxlength = "3", pattern = "[0-9]{1,3}" })
+            </div>
+            <div class="mb-3">
+                <label>Doktor Tel</label>
+                @Html.TextBoxFor(vm => vm.Doktors.DrTel, new { @type = "text", @class = "form-control", minlength = "11", maxlength = "11", pattern = "[0-9]{1,11}", placeholder = "Lütfen numaranızı eksiksiz giriniz" })
+            </div>
+            <div class="mb-3">
+                <label>Doktor Email</label>
+                @Html.TextBoxFor(vm => vm.Doktors.DrEmail, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Doktor Kliniği</label>
+                @Html.DropDownListFor(vm => vm.Doktors.KlinikID, (List<SelectListItem>)ViewBag.Klinikler, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Doktor Hastanesi</label>
+                @Html.DropDownListFor(vm => vm.Doktors.HastaneID, (List<SelectListItem>)ViewBag.Hastaneler, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Doktor Cinsiyeti</label>
+                @Html.DropDownListFor(vm => vm.Doktors.CinsiyetID, (List<SelectListItem>)ViewBag.Cinsiyetler, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Doktor Kullanıcı Adı</label>
+                @Html.DropDownListFor(vm => vm.Doktors.KullaniciID, (List<SelectListItem>)ViewBag.Kullanicilar, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div id="HastanelerForm" class="form-template" style="display:none;">
+            <div class="mb-3">
+                <label>Hastane Adı</label>
+                @Html.TextBoxFor(vm => vm.Hastanes.HastaneAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+            </div>
+            <div class="mb-3">
+                <label for="sehirDropdown">Hastane Şehiri</label>
+                @Html.DropDownListFor(vm => vm.Hastanes.SehirID, Model.Sehirler, "Şehir Seçiniz", new { @class = "form-control", id = "sehirDropdownHastane" })
+            </div>
+            <div class="mb-3">
+                <label for="ilceDropdown">Hastane İlçesi</label>
+                @Html.DropDownListFor(vm => vm.Hastanes.IlceID, Model.Ilceler, new { @class = "form-control", id = "ilceDropdownHastane" })
+            </div>
+        </div>
+
+        <div id="KliniklerForm" class="form-template" style="display:none;">
+            <div class="mb-3">
+                <label>Klinik Adı</label>
+                @Html.TextBoxFor(vm => vm.Kliniks.KlinikAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+            </div>
+        </div>
+
+        <div id="SehirlerForm" class="form-template" style="display:none;">
+            <div class="mb-3">
+                <label>Şehir Adı</label>
+                @Html.TextBoxFor(vm => vm.Sehirs.SehirAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+            </div>
+        </div>
+
+        <div id="IlcelerForm" class="form-template" style="display:none;">
+            <div class="mb-3">
+                <label>İlçe Adı</label>
+                @Html.TextBoxFor(vm => vm.Ilces.IlceAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ ]+$", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+            </div>
+            <div class="mb-3">
+                <label>İlçe Şehiri</label>
+                @Html.DropDownListFor(vm => vm.Ilces.SehirID, Model.Sehirler, "Şehir Seçiniz", new { @class = "form-control", id = "sehirDropdown" })
+            </div>
+        </div>
+
+        <div id="RandevularForm" class="form-template" style="display:none;">
+            <div class="mb-3">
+                <label>Hasta Adı</label>
+                @Html.DropDownListFor(vm => vm.Randevus.HastaID, (List<SelectListItem>)ViewBag.Hastalar, "Hasta Seçiniz", new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Doktor Adı</label>
+                @Html.DropDownListFor(vm => vm.Randevus.DoktorID, (List<SelectListItem>)ViewBag.Doktorlar, "Doktor Seçiniz", new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Hastanesi</label>
+                @Html.DropDownListFor(vm => vm.Randevus.HastaneID, (List<SelectListItem>)ViewBag.Hastaneler, "Hastane Seçiniz", new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Kliniği</label>
+                @Html.DropDownListFor(vm => vm.Randevus.KlinikID, (List<SelectListItem>)ViewBag.Klinikler, "Klinik Seçiniz", new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Randevu Tarihi</label>
+                @Html.DropDownListFor(vm => vm.Randevus.RandSaatID, (List<SelectListItem>)ViewBag.RandevuSaatleri, "Randevu Tarihi Seçiniz", new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                <label>Randevu Durumu</label>
+                @Html.DropDownListFor(vm => vm.Randevus.RandDurumID, (List<SelectListItem>)ViewBag.RandevuDurumlari, "Randevu Durumu Seçiniz", new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Kaydet</button>
+</form>
+
+<script src="~/admin\vendor\jquery\jquery.min.js"></script>
+<script>
+    document.getElementById("tableSelector").addEventListener("change", function () {
+        const selectedTable = this.value;
+        document.querySelectorAll(".form-template").forEach(form => {
+            form.style.display = "none";
+        });
+        if (selectedTable) {
+            document.getElementById(`${selectedTable}Form`).style.display = "block";
+        }
+    });
+
+    $(document).ready(function () {
+        $('#sehirDropdownHasta').change(function () {
+            var sehirID = $(this).val();
+            var ilceDropdown = $('#ilceDropdownHasta');
+
+            // İlçe dropdown'ı temizle
+            ilceDropdown.empty();
+            ilceDropdown.append(new Option("İlçe Seçiniz", ""));
+
+            if (sehirID) {
+                // İlçeleri al ve dropdown'a ekle
+                $.get('@Url.Action("GetIlceler","Admin")', { sehirID: sehirID }, function (data) {
+                    console.log(data);
+                    data.forEach(function (ilce) {
+                        ilceDropdown.append(new Option(ilce.text, ilce.value));
+                    });
+                });
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#sehirDropdownHastane').change(function () {
+            var sehirID = $(this).val();
+            var ilceDropdown = $('#ilceDropdownHastane');
+
+            // İlçe dropdown'ı temizle
+            ilceDropdown.empty();
+            ilceDropdown.append(new Option("İlçe Seçiniz", ""));
+
+            if (sehirID) {
+                // İlçeleri al ve dropdown'a ekle
+                $.get('@Url.Action("GetIlceler", "Admin")', { sehirID: sehirID }, function (data) {
+                    console.log(data);
+                    data.forEach(function (ilce) {
+                        ilceDropdown.append(new Option(ilce.text, ilce.value));
+                    });
+                });
+            }
+        });
+    });
+</script>
+
+
+
+
+
+@* <form class="form-group" style="margin-left:20px" method="post">
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <label>Hasta Adı</label>
+        @Html.TextBoxFor(vm => vm.Hastas.HastaAdi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+$", required = "required", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+    </div>
+    <div class="mb-3">
+        <label>Hasta Soyadı</label>
+        @Html.TextBoxFor(vm => vm.Hastas.HastaSoyadi, new { @type = "text", @class = "form-control", pattern = "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+$", required = "required", title = "Lütfen yalnızca harflerden oluşan bir giriş yapın." })
+    </div>
+    <button class="btn btn-danger">ekle</button>
+</form> *@

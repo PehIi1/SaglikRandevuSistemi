@@ -1,0 +1,112 @@
+﻿@using SaglikRandevuSistemi.Models
+@model List<Randevular>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var tempMessage = TempData["tempMessage"];
+}
+@if (tempMessage != null)
+{
+    <div class="alert alert-primary">
+        @tempMessage
+    </div>
+}
+
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Hastaneler Tablosu</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>RandevuID</th>
+                            <th>Hasta Adı</th>
+                            <th>Doktor Adı</th>
+                            <th>Hastane Adı</th>
+                            <th>Klinik Adı</th>
+                            <th>Randevu Tarihi</th>
+                            <th>Randevu Durumu</th>
+                            <th>Sil</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>RandevuID</th>
+                            <th>Hasta Adı</th>
+                            <th>Doktor Adı</th>
+                            <th>Hastane Adı</th>
+                            <th>Klinik Adı</th>
+                            <th>Randevu Tarihi</th>
+                            <th>Randevu Durumu</th>
+                            <th>Sil</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td>@i.RandID</td>
+                                @if (i.HastaID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Hastalar.HastaAdi @i.Hastalar.HastaSoyadi</td>
+                                }
+                                @if (i.DoktorID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Doktorlar.DrAdi @i.Doktorlar.DrSoyadi</td>
+                                }
+                                @if (i.HastaneID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Hastaneler.HastaneAdi</td>
+                                }
+                                @if (i.KlinikID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.Klinikler.KlinikAdi</td>
+                                }
+                                @if (i.RandSaatID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.RandevuSaatleri.RandSaatZamani</td>
+                                }
+                                @if (i.RandDurumID == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@i.RandevuDurumlari.RandDurumAdi</td>
+                                }
+                                <td>
+                                    <a href="@Url.Action("VeriSilme","Admin", new { id = i.RandID,  Sayfa= "RandevularTables"})" class="btn btn-danger" onclick="return confirm('Bi veriyi silmek istediğinizden emin misiniz?')">Sil</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a href="@Url.Action("VeriEkleme","Admin")" class="btn btn-primary">Randevu Ekle</a>
+            </div>
+        </div>
+    </div>
+</div>

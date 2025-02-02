@@ -1,0 +1,116 @@
+﻿@using SaglikRandevuSistemi.ViewModels
+@section Arayuz
+{
+    <link href="~/css/Arayuz.css" rel="stylesheet" type="text/css" />
+}
+
+@await Html.PartialAsync("~/Views/PartialViews/_DoktorArayuzHeader.cshtml")
+@model RandevuMixDto
+<div class="container" style="min-height: 563.5px;">
+    <div class="main-section">
+        <div class="tabs">
+            <div class="tabs-header">
+                <div class="tab active">Randevularım</div>
+                <div class="tab">Geçmiş Randevularım</div>
+            </div>
+            <div class="tab-content">
+                @if (Model.yeni.Count != 0)
+
+                {
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Gun</th>
+                                <th>Saat</th>
+                                <th>Hastahane</th>
+                                <th>Klinik</th>
+                                <th>Hasta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.yeni)
+
+                            {
+                                <tr>
+                                    <td>
+                                        @item.RandevuGun
+                                    </td>
+                                    <td>
+                                        @item.RandSaatID
+                                    </td>
+                                    <td>
+                                        @item.Hastane
+                                    </td>
+                                    <td>
+                                        @item.Klinik
+                                    </td>
+                                    <td>
+                                        @item.Hasta
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                @if (Model.yeni.Count == 0)
+                {
+                    <div class="card">Aktif Randevunuz Yok</div> <!-- Eger veri yoksa bu yazilacaktir -->
+                }
+
+            </div>
+            <div class="tab-content">
+                @if (Model.eski.Count != 0)
+
+                {
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Gun</th>
+                                <th>Saat</th>
+                                <th>Hastahane</th>
+                                <th>Klinik</th>
+                                <th>Doktor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.eski)
+
+                            {
+                                <tr>
+                                    <td>
+                                        @item.RandevuGun
+                                    </td>
+                                    <td>
+                                        @item.RandSaatID
+                                    </td>
+                                    <td>
+                                        @item.Hastane
+                                    </td>
+                                    <td>
+                                        @item.Klinik
+                                    </td>
+                                    <td>
+                                        @item.Doktor
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                @if (Model.eski.Count == 0)
+                {
+                    <div class="card">Aktif Randevunuz Yok</div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Arayuz.js"></script>
+<script>
+        window.history.pushState(null, "", window.location.href); // Geçmişi değiştir
+    window.onpopstate = function () {
+        window.history.pushState(null, "", window.location.href); // Geri tuşu engellenir, mevcut sayfada kalır
+    };
+</script>
